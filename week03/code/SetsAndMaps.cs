@@ -22,7 +22,29 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        HashSet<string> wordTest = new HashSet<string>();
+        List<string> pairs = new List<string>();
+        foreach (string word in words)
+        {
+            wordTest.Add(word);
+        }
+        foreach (string word in words)
+        {
+            char[] letters = word.ToCharArray();
+            Array.Reverse(letters);
+            if (letters[0] == letters[1])
+            {
+                continue;
+            }
+            string reverse = new string(letters);
+            if (wordTest.Contains(reverse))
+            {
+                pairs.Add($"{word} & {reverse}");
+                wordTest.Remove(word);
+            }
+        }
+
+        return pairs.ToArray();
     }
 
     /// <summary>
@@ -43,6 +65,14 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+            if (degrees.ContainsKey(fields[3]))
+            {
+                degrees[fields[3]] += 1;
+            }
+            else
+            {
+                degrees[fields[3]] = 1;
+            }
         }
 
         return degrees;
@@ -67,7 +97,45 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        Dictionary<char, int> checker = new Dictionary<char, int>();
+        string low1 = word1.ToLower().Replace(" ", string.Empty);
+        string low2 = word2.ToLower().Replace(" ", string.Empty);
+
+        for (int i = 0; i < low1.Length; i++)
+        {
+            if (checker.ContainsKey(low1[i]))
+            {
+                checker[low1[i]] += 1;
+            }
+            else
+            {
+                checker[low1[i]] = 1;
+            }
+        }
+        foreach (char c in low2)
+        {
+            if (checker.ContainsKey(c))
+            {
+                checker[c] -= 1;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        for (int i = 0; i < checker.Count; i++)
+        {
+            if (checker[low1[i]] == 0)
+            {
+                continue;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /// <summary>
