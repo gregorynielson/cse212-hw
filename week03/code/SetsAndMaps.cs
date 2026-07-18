@@ -168,7 +168,23 @@ public static class SetsAndMaps
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
+
+        // int length = featureCollection.QuakeMag.Count;
+        // string[] output = new string[length];
+        // int i = 0;
+        List<string> output = new List<string>();
+
+        foreach (var earthquake in featureCollection.Features)
+        {
+            // var magnitude = featureCollection.QuakeMag.mag;
+            // var location = featureCollection.QuakeMag.place; 
+            output.Add($"{earthquake.Place}: {earthquake.Mag} - Mag ");
+
+        }
+
+        string[] quakeArray = output.ToArray();
+
         // 3. Return an array of these string descriptions.
-        return [];
+        return quakeArray;
     }
 }
